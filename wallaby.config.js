@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'testing';
+
 module.exports = wallaby => ({
   files: [
     'src/**/*',
@@ -11,7 +13,12 @@ module.exports = wallaby => ({
 
   env: {
     type: 'node',
-    runner: 'node'
+    runner: 'node',
+    // params: {
+    //   env: {
+    //     NODE_ENV: 'testing'
+    //   }
+    // }
   },
 
   testFramework: 'ava',
@@ -20,5 +27,9 @@ module.exports = wallaby => ({
 
   compilers: {
     '**/*.js': wallaby.compilers.babel()
+  },
+
+  workers: {
+    recycle: true
   }
 });

@@ -1,4 +1,5 @@
 import { Server } from 'hapi';
+import Joi from 'joi';
 
 const server = new Server();
 
@@ -7,11 +8,43 @@ const port = process.env.PORT || 4000;
 
 server.connection({
   port, router: {
-    isCaseSensitive: false
+    isCaseSensitive: false,
   },
   routes: {
-    cors: true
-  }
+    cors: true,
+  },
+});
+
+
+server.route({
+  method: 'GET',
+  path: '/blah',
+  config: {
+    tags: ['api'],
+  },
+  handler: (req, reply) => {
+    return reply({ hello: 'world'});
+  },
+});
+
+
+server.route({
+  method: 'POST',
+  path: '/greet',
+  config: {
+    tags: ['api'],
+    validate: {
+      payload: {
+        name: Joi.string().required(),
+      },
+    },
+  },
+  handler: (req, reply) => {
+    const { name } = req.payload;
+    return reply({
+      message: `Hello, ${name}`,
+    });
+  },
 });
 
 server.register([
@@ -24,7 +57,7 @@ server.register([
     register: require('good'),
     options: {
       ops: {
-        interval: 5000
+        interval: 5000,
       },
       reporters: {
         console: [
@@ -33,14 +66,14 @@ server.register([
             name: 'Squeeze',
             args: [{
               log: '*',
-              response: '*', request: '*', error: '*'
-            }]
+              response: '*', request: '*', error: '*',
+            }],
           },
           {
-            module: 'good-console'
-          }, 'stdout']
-      }
-    }
+            module: 'good-console',
+          }, 'stdout'],
+      },
+    },
   },
   {
     register: require('hapi-swagger'),
@@ -51,10 +84,10 @@ server.register([
       info: {
         title: 'Example',
         version: '1.0.0',
-        description: 'An example api'
-      }
-    }
-  }
+        description: 'An example api',
+      },
+    },
+  },
 ], err => {
   if (err) throw err;
 
