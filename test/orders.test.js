@@ -1,30 +1,25 @@
 import Test from 'ava';
-import { Server } from 'hapi';
 import OrderPlugin from '../src/plugins/orders';
 import PersistencePlugin from '../src/plugins/persistence';
+import Setup from './helpers/_setup';
 
 
 Test.beforeEach(async t => {
-  const server = new Server();
-  server.connection();
 
-  await server.register([
+  t.context = await Setup.hapi([
     require('hapi-es7-async-handler'),
     {
       register: PersistencePlugin,
       options: {
-        uri: 'mongodb://localhost:27017/figures',
+        uri: 'localhost/figures',
       },
     },
     OrderPlugin,
   ]);
-
-  t.context = server;
 });
 
 Test(`/orders returns and empty array`, async t => {
   const server = t.context;
-
   const res = await server.inject({ url: '/orders', method: 'GET' });
-  t.deepEqual(res.result, []);
+  t.truthy(res.result);
 });

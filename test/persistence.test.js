@@ -1,17 +1,14 @@
 import Test from 'ava';
-import { Server } from 'hapi';
 import PersistencePlugin from '../src/plugins/persistence';
+import Setup from './helpers/_setup';
 
 Test.beforeEach(async t => {
-  const server = new Server();
-  server.connection();
 
-  await server.register([
+  t.context = await Setup.hapi([
     require('hapi-es7-async-handler'),
     PersistencePlugin,
   ]);
 
-  t.context = server;
 });
 
 Test(`sets up properly`, async t => {
