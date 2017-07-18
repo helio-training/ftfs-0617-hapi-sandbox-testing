@@ -1,8 +1,13 @@
 const register = (server, options, next) => {
 
+  server.dependency(['hapi-es7-async-handler', 'persistence']);
+
+  const { persistence } = server.plugins;
+
   server.expose({
     async find() {
-      return await [];
+      const orders = await persistence.collection('orders');
+      return await orders.find({}).toArray();
     },
   });
 
@@ -10,12 +15,12 @@ const register = (server, options, next) => {
     method: 'GET',
     path: '/orders',
     config: {
-      tags: ['api']
+      tags: ['api'],
     },
     handler: async (request, reply) => {
-      const { server } = request;
-      const orders = await server.plugins.orders.find();
-      return reply(orders);
+      const { orders } = request.server.plugins;
+      const results = await orders.find({});
+      return reply(results);
     },
   });
 
@@ -24,6 +29,7 @@ const register = (server, options, next) => {
 
 register.attributes = {
   name: 'orders',
+  // dependencies: ['hapi-es7-async-handler'],
 };
 
 export default register;

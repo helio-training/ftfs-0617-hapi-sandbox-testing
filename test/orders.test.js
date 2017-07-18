@@ -1,6 +1,7 @@
 import Test from 'ava';
 import { Server } from 'hapi';
 import OrderPlugin from '../src/plugins/orders';
+import PersistencePlugin from '../src/plugins/persistence';
 
 
 Test.beforeEach(async t => {
@@ -9,6 +10,12 @@ Test.beforeEach(async t => {
 
   await server.register([
     require('hapi-es7-async-handler'),
+    {
+      register: PersistencePlugin,
+      options: {
+        uri: 'mongodb://localhost:27017/figures',
+      },
+    },
     OrderPlugin,
   ]);
 
