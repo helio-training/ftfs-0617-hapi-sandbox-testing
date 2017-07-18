@@ -1,5 +1,6 @@
 import { Server } from 'hapi';
-import Joi from 'joi';
+
+import OrdersPlugin from './plugins/orders/index';
 
 const server = new Server();
 
@@ -7,7 +8,8 @@ const env = process.env.NODE_ENV || 'development';
 const port = process.env.PORT || 4000;
 
 server.connection({
-  port, router: {
+  port,
+  router: {
     isCaseSensitive: false,
   },
   routes: {
@@ -16,43 +18,21 @@ server.connection({
 });
 
 
-server.route({
-  method: 'GET',
-  path: '/blah',
-  config: {
-    tags: ['api'],
-  },
-  handler: (req, reply) => {
-    return reply({ hello: 'world'});
-  },
-});
-
-
-server.route({
-  method: 'POST',
-  path: '/greet',
-  config: {
-    tags: ['api'],
-    validate: {
-      payload: {
-        name: Joi.string().required(),
-      },
-    },
-  },
-  handler: (req, reply) => {
-    const { name } = req.payload;
-    return reply({
-      message: `Hello, ${name}`,
-    });
-  },
-});
-
 server.register([
   require('inert'),
   require('vision'),
   require('blipp'),
   require('tv'),
-  require('hapi-async-handler'),
+  require('hapi-es7-async-handler'),
+  {
+    register: OrdersPlugin,
+    options: {
+      stripe: {
+        isProduction: true,
+        key: '1234',
+      },
+    },
+  },
   {
     register: require('good'),
     options: {
@@ -66,7 +46,9 @@ server.register([
             name: 'Squeeze',
             args: [{
               log: '*',
-              response: '*', request: '*', error: '*',
+              response: '*',
+              request: '*',
+              error: '*',
             }],
           },
           {
@@ -82,12 +64,13 @@ server.register([
       jsonEditor: true,
       documentationPath: '/',
       info: {
-        title: 'Example',
+        title: 'Lego Store',
         version: '1.0.0',
         description: 'An example api',
       },
     },
   },
+
 ], err => {
   if (err) throw err;
 
