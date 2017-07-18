@@ -1572,6 +1572,12 @@ date-time@^2.1.0:
   dependencies:
     time-zone "^1.0.0"
 
+debug@*:
+  version "2.6.8"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
+  dependencies:
+    ms "2.0.0"
+
 debug@^2.1.1, debug@^2.2.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.0.tgz#bc596bcabe7617f11d9fa15361eded5608b8499b"
@@ -2913,13 +2919,51 @@ mongodb-core@2.1.14:
     bson "~1.0.4"
     require_optional "~1.0.0"
 
-mongodb@^2.2.30:
+mongodb@^2.1.18, mongodb@^2.2.30:
   version "2.2.30"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-2.2.30.tgz#8ccd801f676c8172040c2f2b47e9602a0d5634ab"
   dependencies:
     es6-promise "3.2.1"
     mongodb-core "2.1.14"
     readable-stream "2.2.7"
+
+monk-middleware-cast-ids@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/monk-middleware-cast-ids/-/monk-middleware-cast-ids-0.2.1.tgz#40c40e5a6cb33ccedc289220943275ee8861c529"
+
+monk-middleware-fields@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/monk-middleware-fields/-/monk-middleware-fields-0.2.0.tgz#ff637af35f5948879ccb2be15a91360911bea6c1"
+
+monk-middleware-handle-callback@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/monk-middleware-handle-callback/-/monk-middleware-handle-callback-0.2.0.tgz#fabf9376ecdf00c9e36c89b05aea0812b8b83a1c"
+
+monk-middleware-options@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/monk-middleware-options/-/monk-middleware-options-0.2.1.tgz#58dae1c518d46636ebdff506fadfc773bb442886"
+
+monk-middleware-query@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/monk-middleware-query/-/monk-middleware-query-0.2.0.tgz#a926c677d4a5620c62151b0a56d0c0c151675874"
+
+monk-middleware-wait-for-connection@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/monk-middleware-wait-for-connection/-/monk-middleware-wait-for-connection-0.2.0.tgz#312958d30e588b57d09754dd7c97b4843316835a"
+
+monk@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/monk/-/monk-6.0.1.tgz#f20e6b60d56192d4d1bf82981695e24806e0464c"
+  dependencies:
+    debug "*"
+    mongodb "^2.1.18"
+    monk-middleware-cast-ids "^0.2.1"
+    monk-middleware-fields "^0.2.0"
+    monk-middleware-handle-callback "^0.2.0"
+    monk-middleware-options "^0.2.1"
+    monk-middleware-query "^0.2.0"
+    monk-middleware-wait-for-connection "^0.2.0"
+    object-assign "^4.1.1"
 
 ms@0.7.1:
   version "0.7.1"
@@ -2929,7 +2973,7 @@ ms@0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
-ms@^2.0.0:
+ms@2.0.0, ms@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
@@ -3040,7 +3084,7 @@ object-assign@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
 
-object-assign@^4.0.1, object-assign@^4.1.0:
+object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 

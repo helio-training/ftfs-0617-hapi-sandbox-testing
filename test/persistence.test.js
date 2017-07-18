@@ -20,8 +20,8 @@ Test(`sets up properly`, async t => {
 });
 
 Test(`can access figures collection`, async t => {
-  const {persistence} = t.context.plugins;
+  const { persistence } = t.context.plugins;
   const figures = await persistence.collection('figures');
-  const result = await figures.find({}).toArray();
+  const result = await figures.find({});
   t.truthy(result);
 });

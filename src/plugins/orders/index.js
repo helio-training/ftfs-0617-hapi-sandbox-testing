@@ -1,13 +1,12 @@
 const register = (server, options, next) => {
-
   server.dependency(['hapi-es7-async-handler', 'persistence']);
 
   const { persistence } = server.plugins;
 
   server.expose({
-    async find() {
+    async find(predicate = {}) {
       const orders = await persistence.collection('orders');
-      return await orders.find({}).toArray();
+      return await orders.find(predicate);
     },
   });
 

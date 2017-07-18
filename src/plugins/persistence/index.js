@@ -1,25 +1,24 @@
-import { MongoClient } from 'mongodb';
+import Monk from 'monk';
 
-const setup = async (uri) => await MongoClient.connect(uri);
 
 const plugin = (server, options, next) => {
 
+
   const { uri = 'mongodb://localhost:27017/figures' } = options;
 
-  return setup(uri)
-  .then(db => {
+  const db = Monk(uri);
+  console.log(db);
 
-    server.expose({
-      async collection(name) {
-        return await db.collection(name);
-      },
-    });
+  console.log(db.get('orders'));
 
-    return next();
-  })
-  .catch(err => {
-    return next(err);
+  server.expose({
+    db,
+    async collection(name) {
+      return await db.get(name);
+    },
   });
+
+  return next();
 };
 
 plugin.attributes = {
